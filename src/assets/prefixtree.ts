@@ -72,8 +72,8 @@ export class PrefixTree {
             return [this.root, 0];
         }
 
-        let node = this.root; // Start with the root node
-        let depth = 0; // Count the detph
+        // Start with the root node and count depth
+        let [node, depth] = [this.root, 0];
         for (const char of str) {
             if (node.hasChild(char)) {
                 node = node.getChild(char); // Found the char, go next
@@ -81,5 +81,37 @@ export class PrefixTree {
             }
         }
         return [node, depth];
+    }
+
+    complete(prefix: string): string[] {
+        // Create a list of completions in prefix tree
+        const completions: string[] = [];
+
+        // Pull out the values returned from findNode
+        const [node, depth] = this.findNode(prefix);
+
+        // No node was found
+        if (depth === 0) {
+            return completions;
+        }
+
+        // A node was retrieved, traverse it.
+        this.traverse(node, prefix, completions.push);
+        return completions;
+    }
+
+    private traverse(
+        node: PrefixTreeNode,
+        prefix: string,
+        visit: (c: string) => void
+    ): void {
+        if (node.isTerminal()) {
+            visit(prefix);
+        }
+
+        for (const char of node.children.keys()) {
+            const next_node = node.getChild(char);
+            this.traverse(next_node, prefix + char, visit);
+        }
     }
 }
