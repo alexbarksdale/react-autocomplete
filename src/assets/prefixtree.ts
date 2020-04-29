@@ -22,13 +22,14 @@ export class PrefixTree {
         // Insert each string, if any where given
         if (Array.isArray(strings) && this.strings.length === 0) {
             for (let i = 0; i < this.strings.length; i += 1) {
-                // TODO: insert string
-                console.log('Constructor for loop', this.strings[i]);
+                // TODO: Remove later
+                console.log(`Inserting ${strings[i]} into the tree`);
+                this.insert(strings[i]);
             }
         }
     }
 
-    is_empty(): number {
+    isEmpty(): number {
         /* Return True if this prefix tree is empty (contains no strings). */
         return this.size;
     }
@@ -38,30 +39,47 @@ export class PrefixTree {
         let node = this.root;
 
         for (const char of str) {
-            if (node.has_child(char)) {
-                node = node.get_child(char);
+            if (node.hasChild(char)) {
+                node = node.getChild(char);
             } else {
                 return false;
             }
         }
-        return node.is_terminal();
+        return node.isTerminal();
     }
 
     insert(str: string): void {
         let node = this.root;
 
         for (const char of str) {
-            if (node.has_child(char)) {
-                node = node.get_child(char); // next node
+            if (node.hasChild(char)) {
+                node = node.getChild(char); // Next node
             } else {
-                node.add_child(char, new PrefixTreeNode(char)); // new node
-                node = node.get_child(char); // next node
+                node.addChild(char, new PrefixTreeNode(char)); // New node
+                node = node.getChild(char); // Next node
             }
         }
 
-        if (!node.is_terminal()) {
+        if (!node.isTerminal()) {
             this.size += 1;
-            node.terminal = true; // last node is terminal
+            node.terminal = true; // Last node is terminal
         }
+    }
+
+    private findNode(str: string): [PrefixTreeNode, number] {
+        // Match the empty string
+        if (str.length === 0) {
+            return [this.root, 0];
+        }
+
+        let node = this.root; // Start with the root node
+        let depth = 0; // Count the detph
+        for (const char of str) {
+            if (node.hasChild(char)) {
+                node = node.getChild(char); // Found the char, go next
+                depth += 1;
+            }
+        }
+        return [node, depth];
     }
 }
