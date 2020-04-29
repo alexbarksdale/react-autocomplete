@@ -33,7 +33,7 @@ export class PrefixTree {
         return this.size;
     }
 
-    contains(str: string) {
+    contains(str: string): boolean {
         /* Insert the given string into this prefix tree. */
         let node = this.root;
 
@@ -45,5 +45,23 @@ export class PrefixTree {
             }
         }
         return node.is_terminal();
+    }
+
+    insert(str: string): void {
+        let node = this.root;
+
+        for (const char of str) {
+            if (node.has_child(char)) {
+                node = node.get_child(char); // next node
+            } else {
+                node.add_child(char, new PrefixTreeNode(char)); // new node
+                node = node.get_child(char); // next node
+            }
+        }
+
+        if (!node.is_terminal()) {
+            this.size += 1;
+            node.terminal = true; // last node is terminal
+        }
     }
 }
