@@ -25,3 +25,4 @@ yarn-error.log*
 # project files
 .eslintrc.json
 .prettierrc
+react-app-env.d.ts
