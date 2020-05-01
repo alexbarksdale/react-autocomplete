@@ -1,3 +1,4 @@
+// @ts-ignore
 import { PrefixTreeNode } from './prefixtreenode';
 
 export class PrefixTree {
@@ -9,7 +10,7 @@ export class PrefixTree {
     root: PrefixTreeNode;
     size: number;
 
-    constructor(strings: string[]) {
+    constructor(strings: string[] = []) {
         /* Initialize this prefix tree and insert the given strings, if any. */
         this.strings = strings;
         // Constant for the start character stored in the prefix tree's root node
@@ -20,9 +21,8 @@ export class PrefixTree {
         this.size = 0;
 
         // Insert each string, if any where given
-        if (Array.isArray(strings) && this.strings.length === 0) {
-            for (let i = 0; i < this.strings.length; i += 1) {
-                // TODO: Remove later
+        if (Array.isArray(this.strings) && this.strings.length > 0) {
+            for (let i = 0; i < this.strings!.length; i += 1) {
                 console.log(`Inserting ${strings[i]} into the tree`);
                 this.insert(strings[i]);
             }
@@ -71,9 +71,9 @@ export class PrefixTree {
         }
     }
 
-    isEmpty(): number {
+    isEmpty(): boolean {
         /* Return True if this prefix tree is empty (contains no strings). */
-        return this.size;
+        return this.size === 0;
     }
 
     contains(str: string): boolean {
@@ -125,7 +125,7 @@ export class PrefixTree {
         }
 
         // A node was retrieved, traverse it.
-        this.traverse(node, prefix, completions.push);
+        this.traverse(node, prefix, completions.push.bind(completions));
         return completions;
     }
 
@@ -134,7 +134,31 @@ export class PrefixTree {
 
         // Create a list of all strings in prefix tree
         const all_strings: string[] = [];
-        this.traverse(this.root, '', all_strings.push);
+        this.traverse(this.root, '', all_strings.push.bind(all_strings));
         return all_strings;
     }
+
+    displayPlayground(): void {
+        // =======================
+        // PLAYGROUND
+        /* eslint-disable */
+        // =======================
+        const treeWithStrings = new PrefixTree(['YZ']);
+        console.log('TREE WITH INIT STRINGS:', treeWithStrings.root.children);
+
+        const tree = new PrefixTree();
+        tree.insert('A');
+        console.log('INSERTING "A" INTO TREE', tree);
+        console.log('IS EMPTY?', tree.isEmpty());
+        console.log('CONTAINS "A"?', tree.contains('A'));
+        console.log('FINDING NODE "A"', tree.findNode('A'));
+        console.log('ALL TREE STRINGS', tree.allTreeStrings());
+
+        const strings: string[] = ['G'];
+        const testTreeComplete = new PrefixTree(strings);
+        console.log('TREE COMPLETE:', testTreeComplete.complete('G'));
+    }
 }
+
+const A1 = new PrefixTree();
+A1.displayPlayground();
