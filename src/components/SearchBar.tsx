@@ -1,9 +1,10 @@
-import React, { useState, Dispatch, ChangeEvent } from 'react';
+import React, { useState, Dispatch, ChangeEvent, FormEvent } from 'react';
 import styled from 'styled-components';
 import { FaSearch } from 'react-icons/fa';
 
 import { PrefixTree } from '../assets/prefixtree';
 
+// **** SEARCH BAR STYLES ****
 const SearchContainer = styled.div`
     display: flex;
     align-items: center;
@@ -30,9 +31,10 @@ const SearchInput = styled.input`
         font-size: 16px;
     }
 `;
+// **** END SEARCH BAR STYLES ****
 
-/*
-Props to add:
+/* [TODOS]
+Functionality to add:
 TODO: Customizable placeholder
 TODO: Load corpus
 TODO: Create a callback on submit
@@ -40,17 +42,24 @@ TODO: Add type change Ex: text, password, etc
 TODO: Disable searchicon
 TODO: Add exact match option if possible?
 */
+
 interface AppState {
     searchTree: PrefixTree;
     searchTerm: string;
 }
 
-// const handleChange = (
-//     e: ChangeEvent<HTMLInputElement>,
-//     setSearch: Dispatch<React.SetStateAction<AppState>>
-// ): void => {
-//     setSearch({ searchTerm: e.target.value });
-// };
+const handleTermSubmit = (
+    e: FormEvent<HTMLFormElement>,
+    search: AppState,
+    setSearch: Dispatch<React.SetStateAction<AppState>>
+) => {
+    e.preventDefault();
+
+    // Destructure the values out of state
+    const { searchTree, searchTerm } = search;
+    searchTree.insert(searchTerm);
+    setSearch({ searchTree, searchTerm: '' });
+};
 
 export function SearchBar(): JSX.Element {
     const [search, setSearch] = useState<AppState>({
@@ -58,7 +67,7 @@ export function SearchBar(): JSX.Element {
         searchTerm: '',
     });
 
-    // Pulling the values out of state
+    // Destructure the values out of state
     const { searchTree, searchTerm } = search;
 
     const searchResults = searchTree.complete(searchTerm);
@@ -79,11 +88,15 @@ export function SearchBar(): JSX.Element {
             <span>
                 <FaSearch />
             </span>
-            <SearchInput
-                placeholder='Search...'
-                value={searchTerm}
-                onChange={(e) => setSearch({ searchTree, searchTerm: e.target.value })}
-            />
+            <form onSubmit={(e) => handleTermSubmit(e, search, setSearch)}>
+                <SearchInput
+                    placeholder='Search...'
+                    value={searchTerm}
+                    onChange={(e) =>
+                        setSearch({ searchTree, searchTerm: e.target.value })
+                    }
+                />
+            </form>
 
             <h1>{search.searchTerm}</h1>
         </SearchContainer>
