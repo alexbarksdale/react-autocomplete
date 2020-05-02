@@ -1,4 +1,4 @@
-import React, { useState, Dispatch, ChangeEvent, FormEvent } from 'react';
+import React, { useState, useEffect, Dispatch, ChangeEvent, FormEvent } from 'react';
 import styled from 'styled-components';
 import { FaSearch } from 'react-icons/fa';
 
@@ -41,6 +41,7 @@ TODO: Create a callback on submit
 TODO: Add type change Ex: text, password, etc
 TODO: Disable searchicon
 TODO: Add exact match option if possible?
+TODO: Convert to CSS
 */
 
 interface AppState {
@@ -52,13 +53,21 @@ const handleTermSubmit = (
     e: FormEvent<HTMLFormElement>,
     search: AppState,
     setSearch: Dispatch<React.SetStateAction<AppState>>
-) => {
+): void => {
     e.preventDefault();
 
     // Destructure the values out of state
     const { searchTree, searchTerm } = search;
     searchTree.insert(searchTerm);
     setSearch({ searchTree, searchTerm: '' });
+};
+
+const handleTermChange = (
+    e: ChangeEvent<HTMLInputElement>,
+    searchTree: PrefixTree,
+    setSearch: Dispatch<React.SetStateAction<AppState>>
+): void => {
+    setSearch({ searchTree, searchTerm: e.target.value });
 };
 
 export function SearchBar(): JSX.Element {
@@ -70,6 +79,7 @@ export function SearchBar(): JSX.Element {
     // Destructure the values out of state
     const { searchTree, searchTerm } = search;
 
+    // Retrieves all the search term completions
     const searchResults = searchTree.complete(searchTerm);
 
     // PLAYGROUND - remove later
@@ -77,11 +87,21 @@ export function SearchBar(): JSX.Element {
     console.log('TERM:', searchTerm);
     console.log('RESULTS:', searchResults);
 
-    const B1 = 'Hi';
+    const T1 = 'Hi';
     const T2 = 'Hello';
-    searchTree.insert(B1);
+    searchTree.insert(T1);
     searchTree.insert(T2);
     // END PLAYGROUND
+
+    // Prevents annoying LastPass error when you submit
+    useEffect(() => {
+        document.addEventListener('keydown', (e) => e.stopPropagation(), true);
+
+        // Unmount the event listener
+        return () => {
+            document.removeEventListener('keydown', (e) => e.stopPropagation(), true);
+        };
+    }, []);
 
     return (
         <SearchContainer>
@@ -92,9 +112,7 @@ export function SearchBar(): JSX.Element {
                 <SearchInput
                     placeholder='Search...'
                     value={searchTerm}
-                    onChange={(e) =>
-                        setSearch({ searchTree, searchTerm: e.target.value })
-                    }
+                    onChange={(e) => handleTermChange(e, searchTree, setSearch)}
                 />
             </form>
 
