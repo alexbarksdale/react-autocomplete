@@ -87,11 +87,8 @@ const ListingDivider = styled.div`
 Functionality to add:
 TODO: Customizable placeholder
 TODO: Load corpus
-TODO: Create a callback on submit
 TODO: Add type change Ex: text, password, etc
-TODO: Disable searchicon
 TODO: Add exact match option if possible?
-TODO: Convert to CSS
 TODO: Color matched characters differently
 */
 
@@ -122,9 +119,9 @@ const handleTermChange = (
 };
 
 const displayResults = (searchResults: string[]): JSX.Element[] => {
-    const resultListElement = searchResults.map((result) => {
+    const resultListElement = searchResults.map((result, i) => {
         return (
-            <li>
+            <li key={i}>
                 <a href='REPLACE_ME'>
                     <SearchResultIcon />
                     {result}
@@ -148,9 +145,9 @@ export function SearchBar(): JSX.Element {
     const searchResults: string[] = searchTree.complete(searchTerm);
 
     // PLAYGROUND - remove later
-    console.log('TREE:', search.searchTree);
-    console.log('TERM:', searchTerm);
-    console.log('RESULTS:', searchResults);
+    // console.log('TREE:', search.searchTree);
+    // console.log('TERM:', searchTerm);
+    // console.log('RESULTS:', searchResults);
 
     const T1 = 'Hi';
     const T2 = 'Hello';
