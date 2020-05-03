@@ -85,16 +85,45 @@ const ListingDivider = styled.div`
 
 /*
 Functionality to add:
-TODO: Customizable placeholder
 TODO: Load corpus
-TODO: Add type change Ex: text, password, etc
 TODO: Add exact match option if possible?
 TODO: Color matched characters differently
 */
 
+// Ensure the user gives a valid input type
+type inputType =
+    | 'button'
+    | 'checkbox'
+    | 'color'
+    | 'date'
+    | 'datetime-local'
+    | 'email'
+    | 'file'
+    | 'hidden'
+    | 'image'
+    | 'month'
+    | 'number'
+    | 'password'
+    | 'radio'
+    | 'range'
+    | 'reset'
+    | 'search'
+    | 'submit'
+    | 'tel'
+    | 'text'
+    | 'url'
+    | 'week';
+
+// State properties in this component
 interface AppState {
     searchTree: PrefixTree;
     searchTerm: string;
+}
+
+// Props in this component
+interface AppProps {
+    placeholder?: string;
+    type?: inputType;
 }
 
 const handleTermSubmit = (
@@ -132,7 +161,10 @@ const displayResults = (searchResults: string[]): JSX.Element[] => {
     return resultListElement;
 };
 
-export function SearchBar(): JSX.Element {
+export function SearchBar(props: AppProps): JSX.Element {
+    // Destructure the values out of props and give default values
+    const { placeholder = 'Search...', type = 'text' } = props;
+
     const [search, setSearch] = useState<AppState>({
         searchTree: new PrefixTree(),
         searchTerm: '',
@@ -145,9 +177,9 @@ export function SearchBar(): JSX.Element {
     const searchResults: string[] = searchTree.complete(searchTerm);
 
     // PLAYGROUND - remove later
-    // console.log('TREE:', search.searchTree);
-    // console.log('TERM:', searchTerm);
-    // console.log('RESULTS:', searchResults);
+    console.log('TREE:', search.searchTree);
+    console.log('TERM:', searchTerm);
+    console.log('RESULTS:', searchResults);
 
     const T1 = 'Hi';
     const T2 = 'Hello';
@@ -172,7 +204,8 @@ export function SearchBar(): JSX.Element {
             </span>
             <form onSubmit={(e) => handleTermSubmit(e, search, setSearch)}>
                 <SearchInput
-                    placeholder='Search...'
+                    type={type}
+                    placeholder={placeholder}
                     value={searchTerm}
                     onChange={(e) => handleTermChange(e, searchTree, setSearch)}
                 />
