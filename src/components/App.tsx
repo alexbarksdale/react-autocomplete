@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { SearchBar } from './SearchBar';
@@ -21,18 +21,20 @@ const DemoCorpus = styled.input`
     margin-bottom: 15px;
 `;
 
-const handleFileRead = (e: any) => {
-    const content = e.target.result.split('\n');
-    console.log(content);
-};
-
-const handleFileUpload = (file: any) => {
-    const reader = new FileReader();
-    reader.onloadend = handleFileRead;
-    reader.readAsText(file);
-};
-
 export function App(): JSX.Element {
+    const [corpus, setCorpus] = useState([]);
+
+    const handleFileRead = (e: any) => {
+        const content = e.target.result.split('\n');
+        setCorpus(content);
+    };
+
+    const handleFileUpload = (file: any) => {
+        const reader = new FileReader();
+        reader.onloadend = handleFileRead;
+        reader.readAsText(file);
+    };
+
     return (
         <>
             <GlobalStyle />
@@ -42,7 +44,7 @@ export function App(): JSX.Element {
                     accept='.txt'
                     onChange={(e) => handleFileUpload(e.target.files![0])}
                 />
-                <SearchBar />
+                <SearchBar corpus={corpus} />
             </DemoStyle>
         </>
     );

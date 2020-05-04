@@ -3,9 +3,7 @@ import styled from 'styled-components';
 import { FaSearch, FaChevronRight } from 'react-icons/fa';
 
 import { PrefixTree } from '../assets/prefixtree';
-// @ts-ignore
-import menu_sample from '../assets/corpus/menu_sample.txt';
-import { read } from 'fs';
+import { PrefixTreeNode } from '../assets/prefixtreenode';
 
 // **** SEARCH BAR STYLES ****
 const SearchContainer = styled.div`
@@ -14,7 +12,7 @@ const SearchContainer = styled.div`
     background-color: #fff;
 
     form {
-        width: 286px;
+        width: 355px;
     }
 
     span {
@@ -86,11 +84,6 @@ const ListingDivider = styled.div`
 `;
 // **** END SEARCH BAR STYLES ****
 
-/*
-Functionality to add:
-TODO: Load corpus
-*/
-
 // Ensure the user gives a valid input type
 type inputType =
     | 'button'
@@ -119,12 +112,14 @@ type inputType =
 interface AppState {
     searchTree: PrefixTree;
     searchTerm: string;
+    searchCorpus?: boolean;
 }
 
 // Props in this component
 interface AppProps {
     placeholder?: string;
     type?: inputType;
+    corpus?: string[] | undefined;
 }
 
 const handleTermSubmit = (
@@ -148,6 +143,18 @@ const handleTermChange = (
     setSearch({ searchTree, searchTerm: e.target.value });
 };
 
+const handleCorpus = (
+    searchTerm: string,
+    setSearch: Dispatch<React.SetStateAction<AppState>>,
+    corpus: string[]
+) => {
+    setSearch({
+        searchTree: new PrefixTree(corpus),
+        searchTerm: searchTerm,
+        searchCorpus: true,
+    });
+};
+
 const displayResults = (searchResults: string[]): JSX.Element[] => {
     const resultListElement = searchResults.map((result, i) => {
         return (
@@ -162,34 +169,30 @@ const displayResults = (searchResults: string[]): JSX.Element[] => {
     return resultListElement;
 };
 
-const handleFileRead = (e: any) => {
-    const content = e.target.result.split('\n');
-    console.log(content);
-};
-
-const handleFileUpload = (file: any) => {
-    const reader = new FileReader();
-    reader.onloadend = handleFileRead;
-    reader.readAsText(file);
-};
-
 export function SearchBar(props: AppProps): JSX.Element {
     // Destructure the values out of props and give default values
-    const { placeholder = 'Search...', type = 'text' } = props;
+    const { placeholder = 'Search...', type = 'text', corpus = [] } = props;
 
     const [search, setSearch] = useState<AppState>({
         searchTree: new PrefixTree(),
         searchTerm: '',
+        searchCorpus: false,
     });
 
     // Destructure the values out of state
-    const { searchTree, searchTerm } = search;
+    const { searchTree, searchTerm, searchCorpus } = search;
+
+    // Check if a corpus was added to the tree
+    if (!searchCorpus && corpus.length > 0) {
+        // Creates a new searchTree with the corpus
+        handleCorpus(searchTerm, setSearch, corpus);
+    }
 
     // Retrieves all the search term completions
     const searchResults: string[] = searchTree.complete(searchTerm);
 
     // PLAYGROUND - remove later
-    console.log('TREE:', search.searchTree);
+    console.log('TREE:', searchTree);
     console.log('TERM:', searchTerm);
     console.log('RESULTS:', searchResults);
 
