@@ -91,6 +91,10 @@ Functionality to add:
 TODO: Load corpus
 */
 
+function readFile(file: any) {
+    const reader = new FileReader();
+}
+
 // Ensure the user gives a valid input type
 type inputType =
     | 'button'
@@ -160,17 +164,6 @@ const displayResults = (searchResults: string[]): JSX.Element[] => {
         );
     });
     return resultListElement;
-};
-
-const handleFileRead = (e: any) => {
-    const content = e.target.result.split('\n');
-    console.log(content);
-};
-
-const handleFileUpload = (file: any) => {
-    const reader = new FileReader();
-    reader.onloadend = handleFileRead;
-    reader.readAsText(file);
 };
 
 export function SearchBar(props: AppProps): JSX.Element {
