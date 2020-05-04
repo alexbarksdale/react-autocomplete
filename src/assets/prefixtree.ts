@@ -46,7 +46,8 @@ export class PrefixTree {
             if (node.hasChild(char)) {
                 node = node.getChild(char); // Found the char, go next
                 depth += 1;
-            } else {
+            } else if (depth < 0) {
+                // ^ edge case where you go to negative and all inputs show up
                 depth -= 1; // received a char that doesn't exist
             }
         }
