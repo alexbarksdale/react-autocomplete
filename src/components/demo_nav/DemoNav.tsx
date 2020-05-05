@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface StyleProps {
-    navLogo?: boolean;
+    navlogo?: string;
 }
 
 const NavContainer = styled.nav`
@@ -36,10 +36,10 @@ const NavLogo = styled.h1`
 
 export const StyledLink = styled(Link)`
     color: #3d3d3d;
-    font-size: ${({ navLogo }: StyleProps) => (navLogo ? '19px' : '17px')};
+    font-size: ${({ navlogo }: StyleProps) => (navlogo ? '19px' : '17px')};
     font-weight: 600;
     letter-spacing: 0.5;
-    padding: ${({ navLogo }: StyleProps) => (navLogo ? '15px' : '0px')};
+    padding: ${({ navlogo }: StyleProps) => (navlogo ? '15px' : '0px')};
     text-decoration: none;
     transition: all 0.3s ease-in-out;
     &:hover {
@@ -53,8 +53,8 @@ export function DemoNav(): JSX.Element {
         <NavContainer>
             <NavContent>
                 <NavLogo>
-                    <StyledLink to='/' navLogo>
-                        React AutoComplete
+                    <StyledLink to='/' navlogo='true'>
+                        AutoComplete
                     </StyledLink>
                 </NavLogo>
                 <ul>
