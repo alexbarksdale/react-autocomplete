@@ -2,8 +2,7 @@ import React, { useState, useEffect, Dispatch, ChangeEvent, FormEvent } from 're
 import styled from 'styled-components';
 import { FaSearch, FaChevronRight } from 'react-icons/fa';
 
-import { PrefixTree } from '../assets/prefixtree';
-import { PrefixTreeNode } from '../assets/prefixtreenode';
+import { TrieTree } from '../assets/trietree';
 
 // **** SEARCH BAR STYLES ****
 const SearchContainer = styled.div`
@@ -69,6 +68,7 @@ const SearchListContainer = styled.ul`
             border-radius: 8px;
             text-decoration: none;
             cursor: pointer;
+            transition: all 0.3s ease-in-out;
 
             &:hover {
                 transition: all 0.3s ease-in-out;
@@ -110,7 +110,7 @@ type inputType =
 
 // State properties in this component
 interface AppState {
-    searchTree: PrefixTree;
+    searchTree: TrieTree;
     searchTerm: string;
     searchCorpus?: boolean;
 }
@@ -136,7 +136,7 @@ const handleTermSubmit = (
 
 const handleTermChange = (
     e: ChangeEvent<HTMLInputElement>,
-    searchTree: PrefixTree,
+    searchTree: TrieTree,
     setSearch: Dispatch<React.SetStateAction<AppState>>
 ): void => {
     setSearch({ searchTree, searchTerm: e.target.value });
@@ -148,7 +148,7 @@ const handleCorpus = (
     corpus: string[]
 ) => {
     setSearch({
-        searchTree: new PrefixTree(corpus),
+        searchTree: new TrieTree(corpus),
         searchTerm: searchTerm,
         searchCorpus: true,
     });
@@ -173,7 +173,7 @@ export function SearchBar(props: AppProps): JSX.Element {
     const { placeholder = 'Search...', type = 'text', corpus = [] } = props;
 
     const [search, setSearch] = useState<AppState>({
-        searchTree: new PrefixTree(),
+        searchTree: new TrieTree(),
         searchTerm: '',
         searchCorpus: false,
     });

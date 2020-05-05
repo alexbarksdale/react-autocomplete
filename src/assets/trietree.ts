@@ -1,22 +1,22 @@
 // @ts-ignore
-import { PrefixTreeNode } from './prefixtreenode';
+import { TrieTreeNode } from './trietreenode';
 
-export class PrefixTree {
-    /* PrefixTree: A multi-way prefix tree that stores strings with efficient
+export class TrieTree {
+    /* TrieTree: A multi-way prefix tree that stores strings with efficient
     methods to insert a string into the tree, check if it contains a matching
     string, and retrieve all strings that start with a given prefix string. */
     strings?: string[];
     START_CHARACTER: string;
-    root: PrefixTreeNode;
+    root: TrieTreeNode;
     size: number;
 
     constructor(strings: string[] = []) {
-        /* Initialize this prefix tree and insert the given strings, if any. */
+        /* Initialize this trie tree and insert the given strings, if any. */
         this.strings = strings;
-        // Constant for the start character stored in the prefix tree's root node
+        // Constant for the start character stored in the trie tree's root node
         this.START_CHARACTER = '';
         // Create a new root node with the start characater
-        this.root = new PrefixTreeNode(this.START_CHARACTER);
+        this.root = new TrieTreeNode(this.START_CHARACTER);
         // Count the number of strings inserted into the tree
         this.size = 0;
 
@@ -29,8 +29,8 @@ export class PrefixTree {
         }
     }
 
-    private findNode(str: string): [PrefixTreeNode, number] {
-        /* Return a pair containing the deepest node in this prefix tree that
+    private findNode(str: string): [TrieTreeNode, number] {
+        /* Return a pair containing the deepest node in this trie tree that
         matches the longest prefix of the given string and the node's depth.
         The depth returned is equal to the number of prefix characters matched.
         Search is done iteratively with a loop starting from the root node. */
@@ -56,11 +56,11 @@ export class PrefixTree {
     }
 
     private traverse(
-        node: PrefixTreeNode,
+        node: TrieTreeNode,
         prefix: string,
         visit: (c: string) => void
     ): void {
-        /* Traverse this prefix tree with recursive depth-first traversal.
+        /* Traverse this trie tree with recursive depth-first traversal.
         Start at the given node with the given prefix representing its path in
         this prefix tree and visit each node with the given visit function. */
 
@@ -76,12 +76,12 @@ export class PrefixTree {
     }
 
     isEmpty(): boolean {
-        /* Return True if this prefix tree is empty (contains no strings). */
+        /* Return True if this trie tree is empty (contains no strings). */
         return this.size === 0;
     }
 
     contains(str: string): boolean {
-        /* Insert the given string into this prefix tree. */
+        /* Insert the given string into this trie tree. */
         let node = this.root;
 
         for (let i = 0; i < str.length; i += 1) {
@@ -95,14 +95,14 @@ export class PrefixTree {
     }
 
     insert(str: string): void {
-        /* Insert the given string into this prefix tree. */
+        /* Insert the given string into this trie tree. */
         let node = this.root;
 
         for (let i = 0; i < str.length; i += 1) {
             if (node.hasChild(str[i])) {
                 node = node.getChild(str[i]); // Next node
             } else {
-                node.addChild(str[i], new PrefixTreeNode(str[i])); // New node
+                node.addChild(str[i], new TrieTreeNode(str[i])); // New node
                 node = node.getChild(str[i]); // Next node
             }
         }
@@ -114,10 +114,10 @@ export class PrefixTree {
     }
 
     complete(prefix: string): string[] {
-        /* Return a list of all strings stored in this prefix tree that start
+        /* Return a list of all strings stored in this trie tree that start
            with the given prefix string. */
 
-        // Create a list of completions in prefix tree
+        // Create a list of completions in the trie tree
         const completions: string[] = [];
 
         // Pull out the values returned from findNode
@@ -134,7 +134,7 @@ export class PrefixTree {
     }
 
     allTreeStrings(): string[] {
-        /* Return a list of all strings stored in this prefix tree. */
+        /* Return a list of all strings stored in this trie tree. */
 
         // Create a list of all strings in prefix tree
         const all_strings: string[] = [];
@@ -147,10 +147,10 @@ export class PrefixTree {
         // PLAYGROUND
         /* eslint-disable */
         // =======================
-        const treeWithStrings = new PrefixTree(['YZ']);
+        const treeWithStrings = new TrieTree(['YZ']);
         console.log('TREE WITH INIT STRINGS:', treeWithStrings.root.children);
 
-        const tree = new PrefixTree();
+        const tree = new TrieTree();
         tree.insert('A');
         console.log('INSERTING "A" INTO TREE', tree);
         console.log('IS EMPTY?', tree.isEmpty());
@@ -159,7 +159,7 @@ export class PrefixTree {
         console.log('ALL TREE STRINGS', tree.allTreeStrings());
 
         const strings: string[] = ['G'];
-        const testTreeComplete = new PrefixTree(strings);
+        const testTreeComplete = new TrieTree(strings);
         console.log('TREE COMPLETE:', testTreeComplete.complete('G'));
     }
 }
