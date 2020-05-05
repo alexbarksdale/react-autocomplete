@@ -129,7 +129,6 @@ const handleTermSubmit = (
 ): void => {
     e.preventDefault();
 
-    // Destructure the values out of state
     const { searchTree, searchTerm } = search;
     searchTree.insert(searchTerm);
     setSearch({ searchTree, searchTerm: '' });
