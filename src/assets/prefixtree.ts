@@ -42,9 +42,10 @@ export class PrefixTree {
 
         // Start with the root node and count depth
         let [node, depth] = [this.root, 0];
-        for (const char of str) {
-            if (node.hasChild(char)) {
-                node = node.getChild(char); // Found the char, go next
+
+        for (let i = 0; i < str.length; i += 1) {
+            if (node.hasChild(str[i])) {
+                node = node.getChild(str[i]); // Found the char, go next
                 depth += 1;
             } else {
                 // prevents showing the completions despite typing a character that's not a child
@@ -83,9 +84,9 @@ export class PrefixTree {
         /* Insert the given string into this prefix tree. */
         let node = this.root;
 
-        for (const char of str) {
-            if (node.hasChild(char)) {
-                node = node.getChild(char);
+        for (let i = 0; i < str.length; i += 1) {
+            if (node.hasChild(str[i])) {
+                node = node.getChild(str[i]);
             } else {
                 return false;
             }
@@ -97,12 +98,12 @@ export class PrefixTree {
         /* Insert the given string into this prefix tree. */
         let node = this.root;
 
-        for (const char of str) {
-            if (node.hasChild(char)) {
-                node = node.getChild(char); // Next node
+        for (let i = 0; i < str.length; i += 1) {
+            if (node.hasChild(str[i])) {
+                node = node.getChild(str[i]); // Next node
             } else {
-                node.addChild(char, new PrefixTreeNode(char)); // New node
-                node = node.getChild(char); // Next node
+                node.addChild(str[i], new PrefixTreeNode(str[i])); // New node
+                node = node.getChild(str[i]); // Next node
             }
         }
 
@@ -163,5 +164,5 @@ export class PrefixTree {
     }
 }
 
-const A1 = new PrefixTree();
+// const A1 = new PrefixTree();
 // A1.displayPlayground();
