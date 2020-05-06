@@ -9,6 +9,7 @@ const SearchContainer = styled.div`
     display: flex;
     border-radius: 8px;
     background-color: #fff;
+    box-shadow: 0px 0px 11px 0px #d3d3d3;
 
     form {
         width: 355px;

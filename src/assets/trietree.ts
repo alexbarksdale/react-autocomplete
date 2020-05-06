@@ -1,4 +1,3 @@
-// @ts-ignore
 import { TrieTreeNode } from './trietreenode';
 
 export class TrieTree {
