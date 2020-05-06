@@ -2,13 +2,14 @@ import React, { useState, useEffect, Dispatch, ChangeEvent, FormEvent } from 're
 import styled from 'styled-components';
 import { FaSearch, FaChevronRight } from 'react-icons/fa';
 
-import { TrieTree } from '../assets/trietree';
+import { TrieTree } from '../../assets/trietree';
 
 // **** SEARCH BAR STYLES ****
 const SearchContainer = styled.div`
     display: flex;
     border-radius: 8px;
     background-color: #fff;
+    box-shadow: 0px 0px 11px 0px #e8e8e8;
 
     form {
         width: 355px;

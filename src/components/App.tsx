@@ -3,14 +3,14 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { GlobalStyle } from '../utils/global-styles';
 import { BaseRouter } from '../utils/router';
-import { DemoNav } from './demo_nav/DemoNav';
+import { Navigation } from './navigation/Navigation';
 
 export function App(): JSX.Element {
     return (
         <>
             <GlobalStyle />
             <BrowserRouter>
-                <DemoNav />
+                <Navigation />
                 <BaseRouter />
             </BrowserRouter>
         </>

@@ -36,7 +36,7 @@ const NavLogo = styled.h1`
 
 export const StyledLink = styled(Link)`
     color: #3d3d3d;
-    font-size: ${({ navlogo }: StyleProps) => (navlogo ? '19px' : '17px')};
+    font-size: ${({ navlogo }: StyleProps) => (navlogo ? '19px' : '16px')};
     font-weight: 600;
     letter-spacing: 0.5;
     padding: ${({ navlogo }: StyleProps) => (navlogo ? '15px' : '0px')};
@@ -48,7 +48,7 @@ export const StyledLink = styled(Link)`
     }
 `;
 
-export function DemoNav(): JSX.Element {
+export function Navigation(): JSX.Element {
     return (
         <NavContainer>
             <NavContent>

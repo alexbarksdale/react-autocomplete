@@ -1,13 +1,69 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { SearchBar } from '../SearchBar';
+import { SearchBar } from './SearchBar';
 
 const MenuContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-top: 34px;
+`;
+
+const MenuHeader = styled.div`
+    height: 400px;
+    width: 100%;
+    margin-bottom: 34px;
+    background: url('https://images6.alphacoders.com/908/908160.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+`;
+
+const MenuHeaderContent = styled.div`
+    width: 50%;
+    float: right;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-right: 15px;
+
+    h1 {
+        color: #fff;
+        font-size: 62px;
+        margin-bottom: 15px;
+        text-shadow: 0px 0px 3px #434343;
+    }
+
+    p {
+        color: #fff;
+        text-shadow: 0px 0px 3px #434343;
+    }
+
+    button {
+        margin-top: 14px;
+        padding: 10px 25px;
+        color: #fff;
+        font-size: 14px;
+        font-weight: 800;
+        letter-spacing: 0.6px;
+        width: fit-content;
+        border: none;
+        border-radius: 6px;
+        text-transform: uppercase;
+        transition: all 0.3s ease-in-out;
+        background-color: #c3393c;
+
+        &:hover {
+            cursor: pointer;
+            padding: 10px 35px;
+            transition: all 0.3s ease-in-out;
+            background-color: #ae2c2e;
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }
 `;
 
 const SearchContainer = styled.div`
@@ -18,7 +74,7 @@ const SearchContainer = styled.div`
 
 const MenuGrid = styled.div`
     display: grid;
-    grid-gap: 18px;
+    grid-gap: 20px;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     padding: 29px;
 `;
@@ -28,14 +84,15 @@ const MenuCard = styled.div`
     box-shadow: 0px 0px 11px 0px #d3d3d3;
 
     div {
-        padding: 18px;
+        padding: 9px 17px;
 
         h1 {
-            font-size: 21px;
+            font-size: 20px;
         }
 
         p {
             margin-top: 6px;
+            color: #878787;
         }
     }
 
@@ -51,6 +108,18 @@ const MenuCard = styled.div`
 export function MenuDemo(): JSX.Element {
     return (
         <MenuContainer>
+            <MenuHeader>
+                <MenuHeaderContent>
+                    <h1>Special Offer</h1>
+                    <p>
+                        Tryout our new Ares burger. Guaranteed to make you cry. Complete
+                        this burger within
+                        <strong> one hour </strong>
+                        and get a years worth of our Fun Dip.
+                    </p>
+                    <button type='submit'>Order Now</button>
+                </MenuHeaderContent>
+            </MenuHeader>
             <SearchContainer>
                 <SearchBar />
             </SearchContainer>
@@ -79,7 +148,7 @@ export function MenuDemo(): JSX.Element {
                     <img src='https://i.redd.it/kqvn0cy4w8uz.jpg' alt='Food example' />
                     <div>
                         <h1>Something&apos;s Not Right</h1>
-                        <p>Started as a pizza... ended up throwing a cow in too.</p>
+                        <p>It started as a pizza... ended up throwing a cow in too.</p>
                     </div>
                 </MenuCard>
                 <MenuCard>
