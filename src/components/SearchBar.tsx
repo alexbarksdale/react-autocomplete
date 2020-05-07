@@ -13,7 +13,6 @@ const SearchContainer = styled.div`
     form {
         width: 355px;
     }
-
     span {
         margin: 14px 0px 14px 14px;
         position: absolute;
@@ -120,8 +119,16 @@ interface AppProps {
     placeholder?: string;
     type?: inputType;
     corpus?: string[] | undefined;
+    onChange?: (s: string) => void;
 }
 
+/*
+ * Adds a submited search term to the tree.
+ * @param {FormEvent<HTMLFormElement>} e         FormEvent of the form
+ * @param {AppState}                   search    State properties of this component
+ * @param {SetStateAction}             setSearch Sets the state for search
+ * @return {void}
+ */
 const handleTermSubmit = (
     e: FormEvent<HTMLFormElement>,
     search: AppState,
@@ -134,14 +141,35 @@ const handleTermSubmit = (
     setSearch({ searchTree, searchTerm: '' });
 };
 
+/*
+ * Sets the searchTerm state and passes the changed value to the
+ * parent of this component if added.
+ * @param {ChangeEvent<HTMLInputElement>}   e          ChangeEvent of the input
+ * @param {TrieTree}                        searchTree A trie tree data structure to store strings
+ * @param {SetStateAction}                  setSearch  Sets the state for search
+ * @param {(s: string) => void | undefined} onChange   Sends term to parent component
+ * @return {void}
+ */
 const handleTermChange = (
     e: ChangeEvent<HTMLInputElement>,
     searchTree: TrieTree,
-    setSearch: Dispatch<React.SetStateAction<AppState>>
+    setSearch: Dispatch<React.SetStateAction<AppState>>,
+    onChange?: (s: string) => void
 ): void => {
     setSearch({ searchTree, searchTerm: e.target.value });
+
+    if (onChange) {
+        onChange(e.target.value);
+    }
 };
 
+/*
+ * Handles accepting an optional corpus to put in the state.
+ * @param {string}          searchTerm The input a user types into the search bar
+ * @param {SetStateAction}  setSearch  Sets the state for search
+ * @param {string[]}        corpus     A corpus of text to use for the search bar
+ * @return {void}
+ */
 const handleCorpus = (
     searchTerm: string,
     setSearch: Dispatch<React.SetStateAction<AppState>>,
@@ -154,6 +182,11 @@ const handleCorpus = (
     });
 };
 
+/*
+ * Displays dropdown items of completed prefix terms from the trie tree if any.
+ * @param {string[]} searchResults Results of completions from the trie tree
+ * @return {JSX.Element[]}
+ */
 const displayResults = (searchResults: string[]): JSX.Element[] => {
     const resultListElement = searchResults.map((result, i) => {
         return (
@@ -168,11 +201,9 @@ const displayResults = (searchResults: string[]): JSX.Element[] => {
     return resultListElement;
 };
 
-// TODO: Disable onsubmit to prevent adding to tree
-
 export function SearchBar(props: AppProps): JSX.Element {
     // Destructure the values out of props and give necessary default values
-    const { placeholder = 'Search...', type = 'text', corpus = [] } = props;
+    const { placeholder = 'Search...', type = 'text', corpus = [], onChange } = props;
 
     // Create component state
     const [search, setSearch] = useState<AppState>({
@@ -192,17 +223,6 @@ export function SearchBar(props: AppProps): JSX.Element {
 
     // Retrieves all the search term completions
     const searchResults: string[] = searchTree.complete(searchTerm);
-
-    // PLAYGROUND - remove later
-    // console.log('TREE:', searchTree);
-    // console.log('TERM:', searchTerm);
-    // console.log('RESULTS:', searchResults);
-
-    // const T1 = 'Hi';
-    // const T2 = 'Hello';
-    // searchTree.insert(T1);
-    // searchTree.insert(T2);
-    // END PLAYGROUND
 
     // Prevents annoying LastPass error when you submit
     useEffect(() => {
@@ -224,7 +244,9 @@ export function SearchBar(props: AppProps): JSX.Element {
                     type={type}
                     placeholder={placeholder}
                     value={searchTerm}
-                    onChange={(e) => handleTermChange(e, searchTree, setSearch)}
+                    onChange={(e) =>
+                        handleTermChange(e, searchTree, setSearch, onChange!)
+                    }
                 />
                 {searchResults.length > 0 ? (
                     <>

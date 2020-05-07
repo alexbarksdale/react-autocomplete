@@ -124,8 +124,13 @@ interface AppProps {
     onChange?: (s: string) => void;
 }
 
-/* Responsible for adding a submited search term to the tree */
-
+/*
+ * Adds a submited search term to the tree.
+ * @param {FormEvent<HTMLFormElement>} e         FormEvent of the form
+ * @param {AppState}                   search    State properties of this component
+ * @param {SetStateAction}             setSearch Sets the state for search
+ * @return {void}
+ */
 const handleTermSubmit = (
     e: FormEvent<HTMLFormElement>,
     search: AppState,
@@ -138,8 +143,15 @@ const handleTermSubmit = (
     setSearch({ searchTree, searchTerm: '' });
 };
 
-/* Sets the searchTerm state and passing the changed value to
-the parent of this component if added. */
+/*
+ * Sets the searchTerm state and passes the changed value to the
+ * parent of this component if added.
+ * @param {ChangeEvent<HTMLInputElement>}   e          ChangeEvent of the input
+ * @param {TrieTree}                        searchTree A trie tree data structure to store strings
+ * @param {SetStateAction}                  setSearch  Sets the state for search
+ * @param {(s: string) => void | undefined} onChange   Sends term to parent component
+ * @return {void}
+ */
 const handleTermChange = (
     e: ChangeEvent<HTMLInputElement>,
     searchTree: TrieTree,
@@ -153,8 +165,13 @@ const handleTermChange = (
     }
 };
 
-/* Responsible for setting the searchTerm state and passing the changed value to
-the parent of this component if added. */
+/*
+ * Handles accepting an optional corpus to put in the state.
+ * @param {string}          searchTerm The input a user types into the search bar
+ * @param {SetStateAction}  setSearch  Sets the state for search
+ * @param {string[]}        corpus     A corpus of text to use for the search bar
+ * @return {void}
+ */
 const handleCorpus = (
     searchTerm: string,
     setSearch: Dispatch<React.SetStateAction<AppState>>,
@@ -167,6 +184,11 @@ const handleCorpus = (
     });
 };
 
+/*
+ * Displays dropdown items of completed prefix terms from the trie tree if any.
+ * @param {string[]} searchResults Results of completions from the trie tree
+ * @return {JSX.Element[]}
+ */
 const displayResults = (searchResults: string[]): JSX.Element[] => {
     const resultListElement = searchResults.map((result, i) => {
         return (
