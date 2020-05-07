@@ -242,6 +242,7 @@ export function MenuDemo(): JSX.Element {
                 <SearchBar
                     corpus={MenuCorpus}
                     onChange={(searchTerm: string) => setTerm(searchTerm)}
+                    disableTermSubmit
                 />
             </SearchContainer>
             <MenuGrid>{DisplayMenu(MenuCorpusTest, term)}</MenuGrid>

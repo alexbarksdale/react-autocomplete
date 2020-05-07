@@ -122,24 +122,31 @@ interface AppProps {
     type?: inputType;
     corpus?: string[] | undefined;
     onChange?: (s: string) => void;
+    disableTermSubmit?: boolean;
 }
 
 /*
  * Adds a submited search term to the tree.
- * @param {FormEvent<HTMLFormElement>} e         FormEvent of the form
- * @param {AppState}                   search    State properties of this component
- * @param {SetStateAction}             setSearch Sets the state for search
+ * @param {FormEvent<HTMLFormElement>} e                 FormEvent of the form
+ * @param {AppState}                   search            State properties of this component
+ * @param {SetStateAction}             setSearch         Sets the state for search
+ * @param {boolean}[default=false]     disableTermSubmit Disables adding a search term on submit
  * @return {void}
  */
 const handleTermSubmit = (
     e: FormEvent<HTMLFormElement>,
     search: AppState,
-    setSearch: Dispatch<React.SetStateAction<AppState>>
+    setSearch: Dispatch<React.SetStateAction<AppState>>,
+    disableTermSubmit?: boolean
 ): void => {
     e.preventDefault();
 
     const { searchTree, searchTerm } = search;
-    searchTree.insert(searchTerm);
+
+    // Checks to see if the user didn't disabled adding a new term to the tree on submit
+    if (!disableTermSubmit) {
+        searchTree.insert(searchTerm);
+    }
     setSearch({ searchTree, searchTerm: '' });
 };
 
