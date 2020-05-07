@@ -168,6 +168,8 @@ const displayResults = (searchResults: string[]): JSX.Element[] => {
     return resultListElement;
 };
 
+// TODO: Disable onsubmit to prevent adding to tree
+
 export function SearchBar(props: AppProps): JSX.Element {
     // Destructure the values out of props and give default values
     const { placeholder = 'Search...', type = 'text', corpus = [] } = props;

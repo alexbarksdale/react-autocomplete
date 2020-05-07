@@ -81,12 +81,13 @@ const MenuGrid = styled.div`
 
 const MenuCard = styled.div`
     border-radius: 13px;
-    box-shadow: 0px 0px 11px 0px #d3d3d3;
+    box-shadow: 0px 0px 14px 0px #d3d3d3;
 
     div {
         padding: 9px 17px;
 
         h1 {
+            color: #393939;
             font-size: 20px;
         }
 
@@ -105,6 +106,31 @@ const MenuCard = styled.div`
     }
 `;
 
+const MenuMsgContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 25px;
+    text-align: center;
+
+    h1 {
+        color: #393939;
+    }
+
+    p {
+        display: flex;
+        color: #878787;
+        margin-top: 10px;
+    }
+`;
+
+const MsgDivider = styled.div`
+    height: 3px;
+    width: 45px;
+    margin-top: 5px;
+    background-color: #393939;
+`;
+
 export function MenuDemo(): JSX.Element {
     return (
         <MenuContainer>
@@ -120,6 +146,17 @@ export function MenuDemo(): JSX.Element {
                     <button type='submit'>Order Now</button>
                 </MenuHeaderContent>
             </MenuHeader>
+
+            <MenuMsgContainer>
+                <h1>Choose & enjoy</h1>
+                <MsgDivider />
+                <p>
+                    We take pride in our world class meals.
+                    <br />
+                    Take a minute to let our menu talk you then choose and enjoy.
+                </p>
+            </MenuMsgContainer>
+
             <SearchContainer>
                 <SearchBar />
             </SearchContainer>
