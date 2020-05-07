@@ -171,9 +171,10 @@ const displayResults = (searchResults: string[]): JSX.Element[] => {
 // TODO: Disable onsubmit to prevent adding to tree
 
 export function SearchBar(props: AppProps): JSX.Element {
-    // Destructure the values out of props and give default values
+    // Destructure the values out of props and give necessary default values
     const { placeholder = 'Search...', type = 'text', corpus = [] } = props;
 
+    // Create component state
     const [search, setSearch] = useState<AppState>({
         searchTree: new TrieTree(),
         searchTerm: '',
@@ -193,14 +194,14 @@ export function SearchBar(props: AppProps): JSX.Element {
     const searchResults: string[] = searchTree.complete(searchTerm);
 
     // PLAYGROUND - remove later
-    console.log('TREE:', searchTree);
-    console.log('TERM:', searchTerm);
-    console.log('RESULTS:', searchResults);
+    // console.log('TREE:', searchTree);
+    // console.log('TERM:', searchTerm);
+    // console.log('RESULTS:', searchResults);
 
-    const T1 = 'Hi';
-    const T2 = 'Hello';
-    searchTree.insert(T1);
-    searchTree.insert(T2);
+    // const T1 = 'Hi';
+    // const T2 = 'Hello';
+    // searchTree.insert(T1);
+    // searchTree.insert(T2);
     // END PLAYGROUND
 
     // Prevents annoying LastPass error when you submit

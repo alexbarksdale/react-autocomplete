@@ -121,7 +121,10 @@ interface AppProps {
     placeholder?: string;
     type?: inputType;
     corpus?: string[] | undefined;
+    onChange?: (s: string) => void;
 }
+
+/* Responsible for adding a submited search term to the tree */
 
 const handleTermSubmit = (
     e: FormEvent<HTMLFormElement>,
@@ -135,14 +138,23 @@ const handleTermSubmit = (
     setSearch({ searchTree, searchTerm: '' });
 };
 
+/* Sets the searchTerm state and passing the changed value to
+the parent of this component if added. */
 const handleTermChange = (
     e: ChangeEvent<HTMLInputElement>,
     searchTree: TrieTree,
-    setSearch: Dispatch<React.SetStateAction<AppState>>
+    setSearch: Dispatch<React.SetStateAction<AppState>>,
+    onChange?: (s: string) => void
 ): void => {
     setSearch({ searchTree, searchTerm: e.target.value });
+
+    if (onChange) {
+        onChange(e.target.value);
+    }
 };
 
+/* Responsible for setting the searchTerm state and passing the changed value to
+the parent of this component if added. */
 const handleCorpus = (
     searchTerm: string,
     setSearch: Dispatch<React.SetStateAction<AppState>>,
@@ -170,9 +182,10 @@ const displayResults = (searchResults: string[]): JSX.Element[] => {
 };
 
 export function SearchBar(props: AppProps): JSX.Element {
-    // Destructure the values out of props and give default values
-    const { placeholder = 'Search...', type = 'text', corpus = [] } = props;
+    // Destructure the values out of props and give necessary default values
+    const { placeholder = 'Search...', type = 'text', corpus = [], onChange } = props;
 
+    // Create component state
     const [search, setSearch] = useState<AppState>({
         searchTree: new TrieTree(),
         searchTerm: '',
@@ -190,17 +203,6 @@ export function SearchBar(props: AppProps): JSX.Element {
 
     // Retrieves all the search term completions
     const searchResults: string[] = searchTree.complete(searchTerm);
-
-    // PLAYGROUND - remove later
-    console.log('TREE:', searchTree);
-    console.log('TERM:', searchTerm);
-    console.log('RESULTS:', searchResults);
-
-    const T1 = 'Hi';
-    const T2 = 'Hello';
-    searchTree.insert(T1);
-    searchTree.insert(T2);
-    // END PLAYGROUND
 
     // Prevents annoying LastPass error when you submit
     useEffect(() => {
@@ -222,7 +224,9 @@ export function SearchBar(props: AppProps): JSX.Element {
                     type={type}
                     placeholder={placeholder}
                     value={searchTerm}
-                    onChange={(e) => handleTermChange(e, searchTree, setSearch)}
+                    onChange={(e) =>
+                        handleTermChange(e, searchTree, setSearch, onChange!)
+                    }
                 />
                 {searchResults.length > 0 ? (
                     <>

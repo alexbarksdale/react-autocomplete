@@ -22,7 +22,7 @@ export class TrieTree {
         // Insert each string, if any where given
         if (Array.isArray(this.strings) && this.strings.length > 0) {
             for (let i = 0; i < this.strings!.length; i += 1) {
-                console.log(`Inserting ${strings[i]} into the tree`);
+                // console.log(`Inserting ${strings[i]} into the tree`);
                 this.insert(strings[i]);
             }
         }
