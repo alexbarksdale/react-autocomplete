@@ -170,7 +170,7 @@ const MenuCorpusTest: MenuProperties[] = [
     },
     {
         name: 'Abomination',
-        desc: 'Don&apos;t be shy, put some more.',
+        desc: "Don't be shy, put some more.",
         image:
             'https://66.media.tumblr.com/933545c51866c6348313efd8a1e2844e/e1d30c3209e679f3-fd/s1280x1920/75177289bf8d843a099267fa590faa951caab805.jpg',
     },

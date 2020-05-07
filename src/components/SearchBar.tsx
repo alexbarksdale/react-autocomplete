@@ -208,6 +208,8 @@ const displayResults = (searchResults: string[]): JSX.Element[] => {
     return resultListElement;
 };
 
+// TODO: Add a way to use json as a corpus
+// TODO: Prop documentation
 export function SearchBar(props: AppProps): JSX.Element {
     // Destructure the values out of props and give necessary default values
     const {

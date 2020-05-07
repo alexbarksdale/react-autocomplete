@@ -80,9 +80,8 @@ export class TrieTree {
     }
 
     contains(str: string): boolean {
-        /* Insert the given string into this trie tree. */
+        /* Return true if this prefix tree contains the given string. */
         let node = this.root;
-
         for (let i = 0; i < str.length; i += 1) {
             if (node.hasChild(str[i])) {
                 node = node.getChild(str[i]);
@@ -163,5 +162,5 @@ export class TrieTree {
     }
 }
 
-// const A1 = new PrefixTree();
+// const A1 = new TrieTree();
 // A1.displayPlayground();
