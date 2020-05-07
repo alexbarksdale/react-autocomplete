@@ -1,7 +1,7 @@
 import React, { useState, Dispatch } from 'react';
 import styled from 'styled-components';
 
-import { SearchBar } from './SearchBar';
+import { SearchBar } from './SearchBarDemo';
 import { MenuCorpus } from '../../assets/corpus/menu_sample_array';
 
 const MenuContainer = styled.div`

@@ -210,7 +210,7 @@ const displayResults = (searchResults: string[]): JSX.Element[] => {
 
 /*
  * Functionality of each prop for this component.
- * Reference the AppProps interface.
+ * Each prop is optional! Reference the AppProps interface.
  * @prop {string}               placeholder       Add a custom placeholder
  * @prop {inputType}            type              Change the type of the input
  * @prop {string[] | undefined} corpus            Supply a corpus for the trie tree

@@ -210,6 +210,15 @@ const displayResults = (searchResults: string[]): JSX.Element[] => {
     return resultListElement;
 };
 
+/*
+ * Functionality of each prop for this component.
+ * Each prop is optional! Reference the AppProps interface.
+ * @prop {string}               placeholder       Add a custom placeholder
+ * @prop {inputType}            type              Change the type of the input
+ * @prop {string[] | undefined} corpus            Supply a corpus for the trie tree
+ * @prop {(s: string) => void}  onChange          Pass the changes of the input to a parent
+ * @prop {boolean}              disableTermSubmit Disable adding a new term to the tree on submit
+ */
 export function SearchBar(props: AppProps): JSX.Element {
     // Destructure the values out of props and give necessary default values
     const { placeholder = 'Search...', type = 'text', corpus = [], onChange } = props;
