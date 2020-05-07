@@ -142,8 +142,8 @@ const handleTermSubmit = (
 };
 
 /*
- * Sets the searchTerm state and passes the changed value to the
- * parent of this component if added.
+ * Sets the searchTerm state and passes the changed value
+ * optionally to the parent of this component if added.
  * @param {ChangeEvent<HTMLInputElement>}   e          ChangeEvent of the input
  * @param {TrieTree}                        searchTree A trie tree data structure to store strings
  * @param {SetStateAction}                  setSearch  Sets the state for search
