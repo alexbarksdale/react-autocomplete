@@ -11,10 +11,6 @@ const DemoStyle = styled.div`
     justify-content: center;
     height: 100vh;
     background-color: #42427b;
-
-    div {
-        width: 500px;
-    }
 `;
 
 const DemoTitle = styled.h1`
@@ -63,7 +59,7 @@ const SearchCorpusBtn = styled.button`
 
 const Divider = styled.div`
     height: 2px;
-    width: 100px;
+    width: 100%;
     background-color: #7070ba;
     margin: 25px 0px;
 `;

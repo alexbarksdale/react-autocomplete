@@ -87,23 +87,15 @@ const ListingDivider = styled.div`
 
 // Ensure the user gives a valid input type
 type inputType =
-    | 'button'
-    | 'checkbox'
     | 'color'
     | 'date'
     | 'datetime-local'
     | 'email'
-    | 'file'
     | 'hidden'
-    | 'image'
     | 'month'
     | 'number'
     | 'password'
-    | 'radio'
-    | 'range'
-    | 'reset'
     | 'search'
-    | 'submit'
     | 'tel'
     | 'text'
     | 'url'
