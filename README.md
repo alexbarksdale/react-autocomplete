@@ -1,44 +1,164 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# React Autocomplete
+A React search bar and hook that utilizes a trie tree for super fast results. 
+## Table of Contents
 
-## Available Scripts
 
-In the project directory, you can run:
+* [Built With](#built-with)
+* [Getting Started](#getting-started)
+  * [Installation - Demo project](#demo-project)
+  * [Installation - Include into an existing project](#existing-project)
+* [React Search bar](#react-search-bar)
+* [React Hook](#react-hook)
 
-### `npm start`
+## Built With
+* [Typescript](https://www.typescriptlang.org/)
+* [React](https://reactjs.org/)
+* [styled-components](https://styled-components.com/)
+* [react-icon](https://www.npmjs.com/package/react-icons)
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Getting Started
+#####  ❗️IMPORTANT❗️
+There are two sets of instructions. The first installation is for getting the demo project running on your machine. The second installation is for incoperating the search bar or hook into an existing project.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+If you would like to utilize the trie tree features without using the search bar and create your own use case. I highly recommend you just the autocomplete hook.
 
-### `npm test`
+<a name="demo-project"></a>
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Installation - Demo project
+1. Refer to the getting started description first!
 
-### `npm run build`
+2. Clone the repository:
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+git clone https://github.com/alexbarksdale/react-autocomplete.git
+```
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+3. You now need to install all of the necessary packages for the project, type the following in your terminal:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+npm install
+```
 
-### `npm run eject`
+4. This project comes with a demo application and you can view it with: 
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```
+npm start
+```
+<a name="existing-project"></a>
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Installation - Include into an existing project
+1. Refer to the getting started description first!
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+2. Clone the repository:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```
+git clone https://github.com/alexbarksdale/react-autocomplete.git
+```
 
-## Learn More
+3. Navigate into `src/assets/` and take `trietree.ts`and `trietreenode.ts` into your desired location.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+4. **OPTION 1:** If you would like to use the search bar, navigate to `src/components/` and take `SearchBar.tsx` into your desired location. ‼️ This component uses [styled-components](https://styled-components.com/)  and [react-icon](https://www.npmjs.com/package/react-icons). React-icon is only for the 🔍 icon so if you would like to remove it, find it with cmd + f (ctrl + f for windos) and search for `SearchIcon` and remove it. However, you must install styled-components with: 
+`npm i styled-components @types/styled-components`
+and `npm i react-icons` if you would like to keep the 🔍 icon.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+5. **OPTION 2:** If you would like to use the React autocomplete hook, navigate to `src/components/`and take `useAutocomplete.ts`into your desired location.
+
+<a name="react-search-bar"></a>
+
+# Searchbar
+
+## Props
+
+| Prop                                                                   | Type     |                     Required                     | Description                                                                                                                                                                                           |
+| :--------------------------------------------------------------------- | :------- | :----------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`placeholder`](#placeholder-prop)                                     | String    |                                                 | Customize the placeholder of the component.                                                                                                              |
+| [`type`](#type-prop)                                     | String    |                                                 | Change the input type. Default: type="text"
+| [`corpus`](#corpus-prop)                                     | Array[string]    |                                                 | Supply a corpus to initialize the tree with words or phrases.
+| [`onChange`](#onchange-prop)                                     | Function    |                                                 | Retrieve the input value from the component back to the parent.
+| [`disableTermSubmit`](#disabletermsubmit-prop)                                     | Boolean    |                                                 | Disable adding a new term to the tree on submit.
+
+## Example Usage
+```xml
+import { SearchBar } from './SearchBar';
+
+<SearchBar 
+  placeholder="Search menu..." 
+  corpus={menuItems} 
+  onChange={(searchTerm: string) => setTerm(searchTerm)}
+  disableTermSubmit 
+/>
+```
+
+## Prop Usage
+<a name="placeholder-prop"></a>
+
+#### placeholder (optional)
+```xml
+<SearchBar placeholder="Example" />
+
+```
+
+<a name="type-prop"></a>
+
+#### type (optional)
+```xml
+<SearchBar type="text" />
+
+```
+
+<a name="corpus-prop"></a>
+
+#### corpus (optional)
+```xml
+<SearchBar corpus={['Pizza', 'Pasta', 'Potato']} />
+
+```
+
+<a name="onchange-prop"></a>
+
+#### onChange (optional)
+```xml
+<SearchBar onChange={(s: string) => setState(s)} />
+
+```
+<a name="disabletermsubmit-prop"></a>
+
+#### disableTermSubmit (optional)
+```xml
+<SearchBar disableTermSubmit />
+
+```
+<a name="react-hook"></a>
+
+# React Hook - useAutocomplete
+## Args
+* **Usage:** `const [completions] = useAutocomplete(arg1, arg2)`
+* **Returns:** An array of strings containing completions from a given prefix.
+
+| Arg                                                                   | Type     |                     Required                     | Description                                                                                                                                                                                           |
+| :--------------------------------------------------------------------- | :------- | :----------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `arg1`                                   | String    |      ✓                                           | Used to find a prefix in the tree                                                                                                              |
+| `arg2`                                   | Array[string]    |                                                 | Supply a corpus to initialize the tree with words or phrases.
+
+## Example Usage
+```xml
+import React, { useState} from 'react';
+import { useAutocomplete } from './useAutocomplete';
+
+const [corpus, setCorpus] = useState(['Pizza', 'Pasta', 'Potato']);
+const [searchTerm, setSearchTerm] = useState('');
+
+const [completions] = useAutocomplete(searchTerm, corpus);
+
+export function Demo(): JSX.Element {
+return (
+ {completions.map((item, i) => {
+   return (
+     <ul>
+	   <li key={i}>{item}</li>   
+     </ul>;
+   );
+ })}
+);
+}
+```
