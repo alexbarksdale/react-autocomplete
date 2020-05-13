@@ -85,23 +85,15 @@ const ListingDivider = styled.div`
 
 // Ensure the user gives a valid input type
 type inputType =
-    | 'button'
-    | 'checkbox'
     | 'color'
     | 'date'
     | 'datetime-local'
     | 'email'
-    | 'file'
     | 'hidden'
-    | 'image'
     | 'month'
     | 'number'
     | 'password'
-    | 'radio'
-    | 'range'
-    | 'reset'
     | 'search'
-    | 'submit'
     | 'tel'
     | 'text'
     | 'url'
@@ -244,17 +236,6 @@ export function SearchBar(props: AppProps): JSX.Element {
 
     // Retrieves all the search term completions
     const searchResults: string[] = searchTree.complete(searchTerm);
-
-    // PLAYGROUND - remove later
-    console.log('TREE:', searchTree);
-    console.log('TERM:', searchTerm);
-    console.log('RESULTS:', searchResults);
-
-    const T1 = 'Hi';
-    const T2 = 'Hello';
-    searchTree.insert(T1);
-    searchTree.insert(T2);
-    // END PLAYGROUND
 
     // Prevents annoying LastPass error when you submit
     useEffect(() => {

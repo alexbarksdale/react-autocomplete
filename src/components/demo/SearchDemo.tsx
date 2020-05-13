@@ -90,6 +90,7 @@ export function SearchDemo(): JSX.Element {
     const [corpus, setCorpus] = useState([]);
 
     const [searchTerm, setSearchTerm] = useState('');
+
     const [completions] = useAutocomplete(searchTerm, corpus);
 
     const fileInput = useRef<HTMLInputElement>(null);
@@ -122,7 +123,9 @@ export function SearchDemo(): JSX.Element {
                 <SearchCorpusBtn onClick={() => triggerFileUpload()}>
                     Add Corpus
                 </SearchCorpusBtn>
+
                 <SearchBar corpus={corpus} />
+
                 <Divider />
                 <DemoTitle>Hook Example</DemoTitle>
                 <HookInput
