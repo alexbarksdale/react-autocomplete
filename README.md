@@ -157,7 +157,7 @@ return (
    return (
      <ul>
 	  <li key={i}>{item}</li>   
-     </ul>;
+     </ul>
    );
  })}
 );
