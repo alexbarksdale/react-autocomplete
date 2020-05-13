@@ -61,7 +61,7 @@ git clone https://github.com/alexbarksdale/react-autocomplete.git
 `npm i styled-components @types/styled-components`
 and `npm i react-icons` if you would like to keep the 🔍 icon.
 
-5. **OPTION 2:** If you would like to use the React autocomplete hook, navigate to `src/components/`and take `useAutocomplete.ts`into your desired location.
+5. **OPTION 2:** If you would like to use the React autocomplete hook, navigate to `src/components/`and take `useAutocomplete.ts` into your desired location.
 
 <a name="react-search-bar"></a>
 
@@ -78,7 +78,7 @@ and `npm i react-icons` if you would like to keep the 🔍 icon.
 | [`disableTermSubmit`](#disabletermsubmit-prop)                                     | Boolean    |                                                 | Disable adding a new term to the tree on submit.
 
 ## Example Usage
-```xml
+```js
 import { SearchBar } from './SearchBar';
 
 <SearchBar 
@@ -141,11 +141,11 @@ import { SearchBar } from './SearchBar';
 | `arg2`                                   | Array[string]    |                                                 | Supply a corpus to initialize the tree with words or phrases.
 
 ## Example Usage
-```xml
+```js
 import React, { useState} from 'react';
 import { useAutocomplete } from './useAutocomplete';
 
-const [corpus, setCorpus] = useState(['Pizza', 'Pasta', 'Potato']);
+const corpus = ['Pizza', 'Pasta', 'Potato'];
 const [searchTerm, setSearchTerm] = useState('');
 
 const [completions] = useAutocomplete(searchTerm, corpus);
@@ -155,7 +155,7 @@ return (
  {completions.map((item, i) => {
    return (
      <ul>
-	   <li key={i}>{item}</li>   
+	  <li key={i}>{item}</li>   
      </ul>;
    );
  })}
