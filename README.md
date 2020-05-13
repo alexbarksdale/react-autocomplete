@@ -1,8 +1,8 @@
 # React Autocomplete
-A React search bar and hook that utilizes a trie tree for super fast results. 
+⚡️🌳 A React search bar and hook that utilizes a trie tree for super fast results
+![example](https://media.giphy.com/media/WrxMOJui4l7RfmfczK/giphy.gif)
+
 ## Table of Contents
-
-
 * [Built With](#built-with)
 * [Getting Started](#getting-started)
   * [Installation - Demo project](#demo-project)
