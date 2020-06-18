@@ -58,7 +58,7 @@ git clone https://github.com/alexbarksdale/react-autocomplete.git
 
 3. Navigate into `src/assets/` and take `trietree.ts`and `trietreenode.ts` into your desired location.
 
-4. **OPTION 1:** If you would like to use the search bar, navigate to `src/components/` and take `SearchBar.tsx` into your desired location. ‼️ This component uses [styled-components](https://styled-components.com/)  and [react-icon](https://www.npmjs.com/package/react-icons). React-icon is only for the 🔍 icon so if you would like to remove it, find it with cmd + f (ctrl + f for windos) and search for `SearchIcon` and remove it. However, you must install styled-components with: 
+4. **OPTION 1:** If you would like to use the search bar, navigate to `src/components/` and take `SearchBar.tsx` into your desired location. ‼️ This component uses [styled-components](https://styled-components.com/)  and [react-icon](https://www.npmjs.com/package/react-icons). React-icon is only for the 🔍 icon so if you would like to remove it, find it with cmd + f (ctrl + f for windows) and search for `SearchIcon` and remove it. However, you must install styled-components with: 
 `npm i styled-components @types/styled-components`
 and `npm i react-icons` if you would like to keep the 🔍 icon.
 
